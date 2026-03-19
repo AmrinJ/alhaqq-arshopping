@@ -1,0 +1,7 @@
+/* App-specific overrides can go here, but default Vite constraints have been removed so index.css governs the global layout. */
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

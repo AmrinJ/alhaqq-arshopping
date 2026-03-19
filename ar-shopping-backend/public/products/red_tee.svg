@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="480" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main Body Silhouette (Wide shoulders, dropped sleeves, contoured waist) -->
+  <path d="
+    M140 30 
+    C 170 80, 230 80, 260 30 
+    C 270 30, 310 40, 350 60 
+    C 380 75, 395 100, 395 120 
+    L 375 180 
+    C 365 200, 340 190, 335 180 
+    L 310 130 
+    C 315 250, 320 380, 310 450 
+    C 305 470, 260 475, 200 475 
+    C 140 475, 95 470, 90 450 
+    C 80 380, 85 250, 90 130 
+    L 65 180 
+    C 60 190, 35 200, 25 180 
+    L 5 120 
+    C 5 100, 20 75, 50 60 
+    C 90 40, 130 30, 140 30 Z" 
+    fill="#ef4444" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+    
+  <!-- Fabric Folds & Shading details -->
+  <path d="M120 150 Q 130 250 110 400" stroke="rgba(0,0,0,0.05)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M280 160 Q 270 280 290 420" stroke="rgba(0,0,0,0.05)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M180 90 Q 200 150 220 90" stroke="rgba(0,0,0,0.03)" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Left Sleeve Seam -->
+  <path d="M95 120 C 100 100, 110 80, 110 70" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+  
+  <!-- Right Sleeve Seam -->
+  <path d="M305 120 C 300 100, 290 80, 290 70" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+
+  <!-- Collar back shading -->
+  <path d="M140 30 C 170 80, 230 80, 260 30 C 230 45, 170 45, 140 30 Z" fill="rgba(0,0,0,0.15)"/>
+  
+  <!-- Collar front ribbing -->
+  <path d="M140 30 C 170 85, 230 85, 260 30 C 235 60, 165 60, 140 30 Z" fill="rgba(255,255,255,0.1)"/>
+</svg>
