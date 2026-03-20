@@ -20,17 +20,16 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/products', express.static(path.join(__dirname, 'public/products')));
 
-// Root route
+
 app.get('/', (req, res) => {
   res.send('AR Shopping Platform API is running');
 });
 
-// Health route
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'AR Shopping Platform API is running' });
 });
 
-// API routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
