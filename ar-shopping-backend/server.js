@@ -3,7 +3,10 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
-const db = require('./db');
+const connectDB = require('./db');
+// ...
+connectDB();
+
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');

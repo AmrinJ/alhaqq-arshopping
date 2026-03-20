@@ -1,7 +1,6 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../db');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -19,55 +18,59 @@ router.post('/register', async (req, res) => {
         return res.status(400).json({ message: 'Please provide all fields' });
     }
 
-    db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, row) => {
-        if (err) return res.status(500).json({ message: err.message });
-        if (row) return res.status(400).json({ message: 'User already exists' });
+    try {
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        
-        // Make the first user an admin, otherwise regular user
-        db.get(`SELECT COUNT(*) as count FROM users`, [], (err, countRow) => {
-            const role = (countRow.count === 0) ? 'admin' : 'user';
-            
-            db.run(`INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
-                [name, email, hashedPassword, role],
-                function(err) {
-                    if (err) return res.status(500).json({ message: err.message });
-                    
-                    const userId = this.lastID;
-                    res.status(201).json({
-                        id: userId,
-                        name,
-                        email,
-                        role,
-                        token: generateToken(userId, role)
-                    });
-                }
-            );
+        // Only grant admin role to alhaqq@gmail.com
+        const role = (email === 'alhaqq@gmail.com') ? 'admin' : 'user';
+
+        const user = await User.create({
+            name,
+            email,
+            password,
+            role
         });
-    });
+
+        if (user) {
+            res.status(201).json({
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                token: generateToken(user._id, user.role)
+            });
+        } else {
+            res.status(400).json({ message: 'Invalid user data' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 // @route POST /api/auth/login
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
-        if (err) return res.status(500).json({ message: err.message });
-        if (!user) return res.status(401).json({ message: 'Invalid email or password' });
+    try {
+        const user = await User.findOne({ email });
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
-
-        res.json({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            token: generateToken(user.id, user.role)
-        });
-    });
+        if (user && (await user.matchPassword(password))) {
+            res.json({
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                token: generateToken(user._id, user.role)
+            });
+        } else {
+            res.status(401).json({ message: 'Invalid email or password' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 module.exports = router;

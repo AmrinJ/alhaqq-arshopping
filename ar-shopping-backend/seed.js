@@ -1,77 +1,54 @@
-const db = require('./db');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const User = require('./models/User');
+const Product = require('./models/Product');
+const Order = require('./models/Order');
+
+dotenv.config();
 
 const products = [
-  {
-    name: "Classic White Tee",
-    description: "Premium cotton classic white t-shirt. Perfect for any casual occasion.",
-    price: 259.99,
-    sizes: '["S", "M", "L", "XL"]',
-    colors: '["White"]',
-    fabric: "100% Cotton",
-    image_url: "/products/white_tee.svg",
-    ar_model_url: "/products/white_tee.svg",
-    stock: 100
-  },
-  {
-    name: "Urban Black V-Neck",
-    description: "Sleek black v-neck t-shirt with a modern athletic fit.",
-    price: 299.99,
-    sizes: '["M", "L", "XL"]',
-    colors: '["Black"]',
-    fabric: "Cotton Blend",
-    image_url: "/products/black_tee.svg",
-    ar_model_url: "/products/black_tee.svg",
-    stock: 50
-  },
-  {
-    name: "Grey Unisex Tee",
-    description: "Versatile heather grey tee. Perfect balance of casual style and comfort for anyone.",
-    price: 229.99,
-    sizes: '["S", "M", "L", "XL", "XXL"]',
-    colors: '["Heather Grey"]',
-    fabric: "Tri-blend",
-    image_url: "/products/grey_tee.svg",
-    ar_model_url: "/products/grey_tee.svg",
-    stock: 75
-  },
-  {
-    name: "Navy Unisex Tee",
-    description: "Deep navy blue unisex t-shirt. A solid wardrobe staple.",
-    price: 249.99,
-    sizes: '["S", "M", "L", "XL"]',
-    colors: '["Navy Blue"]',
-    fabric: "100% Cotton",
-    image_url: "/products/navy_tee.svg",
-    ar_model_url: "/products/navy_tee.svg",
-    stock: 60
-  },
-  {
-    name: "Red Unisex Tee",
-    description: "Vibrant red unisex tee to stand out in the crowd.",
-    price: 219.99,
-    sizes: '["S", "M", "L", "XL"]',
-    colors: '["Red"]',
-    fabric: "Cotton Blend",
-    image_url: "/products/red_tee.svg",
-    ar_model_url: "/products/red_tee.svg",
-    stock: 45
-  }
+    {
+        name: 'Classic White T-Shirt',
+        description: 'A comfortable classic white t-shirt made from 100% organic cotton.',
+        category: 'T-Shirts',
+        price: 25.99,
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['White'],
+        fabric: '100% Cotton',
+        image_url: '/uploads/white-tshirt.jpg',
+        stock: 100
+    },
+    {
+        name: 'Slim Fit Blue Jeans',
+        description: 'Premium slim fit blue jeans with a slight stretch for comfort.',
+        category: 'Jeans',
+        price: 59.99,
+        sizes: ['30', '32', '34', '36'],
+        colors: ['Blue'],
+        fabric: '98% Cotton, 2% Elastane',
+        image_url: '/uploads/blue-jeans.jpg',
+        stock: 50
+    }
 ];
 
-db.serialize(() => {
-  db.run("DELETE FROM products", (err) => {
-    if (err) console.error("Error clearing existing products", err);
-    console.log("Cleared old products.");
-    
-    products.forEach(p => {
-      db.run(
-        `INSERT INTO products (name, description, price, sizes, colors, fabric, image_url, ar_model_url, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [p.name, p.description, p.price, p.sizes, p.colors, p.fabric, p.image_url, p.ar_model_url, p.stock],
-        (err) => {
-          if (err) console.error("Error inserting", p.name, err);
-          else console.log("Inserted", p.name);
-        }
-      );
-    });
-  });
-});
+const seedData = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ar-shopping');
+        
+        console.log('Clearing existing data...');
+        await User.deleteMany({});
+        await Product.deleteMany({});
+        await Order.deleteMany({});
+
+        console.log('Seeding products...');
+        await Product.insertMany(products);
+
+        console.log('Data seeded successfully!');
+        process.exit();
+    } catch (error) {
+        console.error(`Error seeding data: ${error.message}`);
+        process.exit(1);
+    }
+};
+
+seedData();
