@@ -30,7 +30,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
         setProduct(data);
         if (data.sizes && data.sizes.length > 0) setSelectedSize(data.sizes[0]);
       } catch (error) {
@@ -47,7 +47,7 @@ const ProductDetails = () => {
 
   const imageUrl = product.image_url?.startsWith('http') 
     ? product.image_url 
-    : `http://localhost:5000${product.image_url}`;
+    : `${import.meta.env.VITE_API_URL}${product.image_url}`;
 
   const handleBuyNow = () => {
     if (!user) {
@@ -93,7 +93,7 @@ const ProductDetails = () => {
       };
 
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.post('http://localhost:5000/api/orders', orderPayload, config);
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/orders`, orderPayload, config);
 
       // Simulate network delay for UX
       setTimeout(() => {
@@ -137,7 +137,7 @@ const ProductDetails = () => {
         <div style={{ borderRadius: '0', overflow: 'hidden', position: 'relative', border: '1px solid black', backgroundColor: 'var(--surface-color)', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '2rem' }}>
           {arMode && (
             <WebARViewer 
-              imageUrl={product.ar_model_url ? `http://localhost:5000${product.ar_model_url}` : imageUrl} 
+              imageUrl={product.ar_model_url ? `${import.meta.env.VITE_API_URL}${product.ar_model_url}` : imageUrl} 
               onClose={() => setArMode(false)} 
             />
           )}

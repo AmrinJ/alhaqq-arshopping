@@ -14,7 +14,7 @@ const Hoodies = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/products');
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
         // Filter specifically for Hoodies
         const filtered = data.filter(p => p.category && p.category.toLowerCase() === 'hoodies');
         setProducts(filtered);

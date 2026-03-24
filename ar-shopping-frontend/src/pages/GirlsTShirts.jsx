@@ -14,7 +14,7 @@ const GirlsTShirts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/products');
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
         // Filter specifically for Girls T-Shirts
         const filtered = data.filter(p => p.category && p.category.toLowerCase() === 'girls t-shirts');
         setProducts(filtered);

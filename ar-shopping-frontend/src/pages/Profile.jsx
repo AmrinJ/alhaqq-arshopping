@@ -29,7 +29,7 @@ const Profile = () => {
     const fetchOrders = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/orders/myorders', config);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/myorders`, config);
         setOrders(data);
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -41,7 +41,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/users/profile', config);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile`, config);
         setProfileData({
           name: data.name || user.name || '',
           phone: data.phone || '',
@@ -63,7 +63,7 @@ const Profile = () => {
     if (window.confirm('Are you sure you want to remove this order from your history?')) {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        await axios.delete(`http://localhost:5000/api/orders/${orderId}`, config);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}`, config);
         setOrders(orders.filter(o => o.id !== orderId));
       } catch (error) {
         console.error("Error deleting order:", error);
@@ -76,7 +76,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.put('http://localhost:5000/api/users/profile', profileData, config);
+      const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, profileData, config);
       
       // Update local context name if it changed
       if (data.name !== user.name) {
@@ -232,7 +232,7 @@ const Profile = () => {
                         {(order.orderItems || []).map((item, index) => (
                            <div key={index} style={{ display: 'flex', gap: '1.5rem', marginBottom: index !== order.orderItems.length - 1 ? '1.5rem' : 0, paddingBottom: index !== order.orderItems.length - 1 ? '1.5rem' : 0, borderBottom: index !== order.orderItems.length - 1 ? '1px solid var(--border-color)' : 'none' }}>
                              <div style={{ width: '80px', height: '80px', backgroundColor: 'white', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
-                               <img src={`http://localhost:5000${item.image_url}`} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                               <img src={`${import.meta.env.VITE_API_URL}${item.image_url}`} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                              </div>
                              <div style={{ flex: 1 }}>
                                <h5 style={{ margin: '0 0 0.5rem 0' }}>{item.name}</h5>

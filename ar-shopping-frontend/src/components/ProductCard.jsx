@@ -4,7 +4,7 @@ import { Camera, Maximize2, Heart } from 'lucide-react';
 const ProductCard = ({ product, variant }) => {
   const imageUrl = product.image_url?.startsWith('http') 
     ? product.image_url 
-    : `http://localhost:5000${product.image_url}`;
+    : `${import.meta.env.VITE_API_URL}${product.image_url}`;
 
   if (variant === 'boys') {
     return (

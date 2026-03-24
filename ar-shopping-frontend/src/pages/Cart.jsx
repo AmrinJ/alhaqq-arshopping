@@ -25,7 +25,7 @@ const Cart = () => {
        const fetchProfile = async () => {
          try {
            const config = { headers: { Authorization: `Bearer ${user.token}` } };
-           const { data } = await axios.get('http://localhost:5000/api/users/profile', config);
+           const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile`, config);
            setProfileData(data);
          } catch(e) { console.error('Error fetching profile', e); }
        };
@@ -57,7 +57,7 @@ const Cart = () => {
       };
 
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.post('http://localhost:5000/api/orders', orderPayload, config);
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/orders`, orderPayload, config);
 
       setTimeout(() => {
         setProcessingPayment(false);
@@ -94,7 +94,7 @@ const Cart = () => {
         <div>
           {cartItems.map(item => (
             <div key={`${item.id}-${item.selectedSize}`} className="cart-item-card">
-              <img src={`http://localhost:5000${item.image_url}`} alt={item.name} className="cart-item-img" />
+              <img src={`${import.meta.env.VITE_API_URL}${item.image_url}`} alt={item.name} className="cart-item-img" />
               
               <div className="cart-item-details">
                 <Link to={`/product/${item.id}`} className="cart-item-title">{item.name}</Link>

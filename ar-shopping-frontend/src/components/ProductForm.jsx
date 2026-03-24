@@ -56,9 +56,9 @@ const ProductForm = ({ product, token, onSuccess }) => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
       if (product) {
-        await axios.put(`http://localhost:5000/api/products/${product.id}`, submitData, config);
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/products/${product.id}`, submitData, config);
       } else {
-        await axios.post('http://localhost:5000/api/products', submitData, config);
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, submitData, config);
       }
       onSuccess();
     } catch (err) {

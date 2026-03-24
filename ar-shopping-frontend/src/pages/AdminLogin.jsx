@@ -15,7 +15,7 @@ const AdminLogin = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
       
       // Verify that this user actually has admin privileges in the DB as a fallback
       if (data.role !== 'admin') {

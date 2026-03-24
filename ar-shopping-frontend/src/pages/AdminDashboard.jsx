@@ -16,13 +16,13 @@ const AdminDashboard = () => {
   const [productCategoryFilter, setProductCategoryFilter] = useState('All');
   
   const fetchProducts = () => {
-    axios.get('http://localhost:5000/api/products')
+    axios.get(`${import.meta.env.VITE_API_URL}/api/products`)
       .then(res => setProducts(res.data))
       .catch(err => console.error(err));
   };
 
   const fetchOrders = () => {
-    axios.get('http://localhost:5000/api/orders/all', {
+    axios.get(`${import.meta.env.VITE_API_URL}/api/orders/all`, {
       headers: { Authorization: `Bearer ${user.token}` }
     })
       .then(res => setOrders(res.data))
@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   };
 
   const fetchUsers = () => {
-    axios.get('http://localhost:5000/api/users/all', {
+    axios.get(`${import.meta.env.VITE_API_URL}/api/users/all`, {
       headers: { Authorization: `Bearer ${user.token}` }
     })
       .then(res => setUsersList(res.data))
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         fetchProducts();
@@ -61,7 +61,7 @@ const AdminDashboard = () => {
 
   const handleUpdateTracking = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/tracking`, 
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/tracking`, 
         { tracking_status: newStatus },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
                     .map(p => (
                     <tr key={p.id}>
                       <td>#{p.id}</td>
-                      <td><img src={p.image_url?.startsWith('http') ? p.image_url : `http://localhost:5000${p.image_url}`} alt={p.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} /></td>
+                      <td><img src={p.image_url?.startsWith('http') ? p.image_url : `${import.meta.env.VITE_API_URL}${p.image_url}`} alt={p.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} /></td>
                       <td>{p.name}</td>
                       <td>{p.category || 'Uncategorized'}</td>
                       <td>₹{p.price.toFixed(2)}</td>

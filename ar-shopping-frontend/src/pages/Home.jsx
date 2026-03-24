@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/products');
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
         setTrendingProducts(data.slice(0, 3));
         setNewArrivals(data.slice(3, 6).length > 0 ? data.slice(3, 6) : data.slice(0, 3));
       } catch (error) {
@@ -96,7 +96,7 @@ const Home = () => {
             {newArrivals.map(product => (
               <div key={product.id} className="min-product-card">
                 <div className="min-img-wrap">
-                  <img src={product.image_url?.startsWith('http') ? product.image_url : `http://localhost:5000${product.image_url}`} alt={product.name} />
+                   <img src={product.image_url?.startsWith('http') ? product.image_url : `${import.meta.env.VITE_API_URL}${product.image_url}`} alt={product.name} />
                   <div className="min-actions">
                     <button className="add-cart-btn">ADD TO CART</button>
                     <button className="icon-btn"><Heart size={16} /></button>
