@@ -125,7 +125,7 @@ const AdminDashboard = () => {
             ) : products.length === 0 ? <p>Loading...</p> : (
               <>
                 <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-                  {['All', 'Boys T-Shirts', 'Girls T-Shirts', 'Unisex T-Shirts', 'Hoodies', 'Summer Outfits', 'Sweatshirts', 'Graphic T-Shirts'].map(cat => (
+                  {['All', 'Boys T-Shirts', 'Girls T-Shirts', 'Unisex T-Shirts', 'Hoodies'].map(cat => (
                     <button 
                       key={cat}
                       className={`btn ${productCategoryFilter === cat ? 'btn-primary' : 'btn-secondary'}`}

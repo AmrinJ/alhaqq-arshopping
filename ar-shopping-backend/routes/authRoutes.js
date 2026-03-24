@@ -13,10 +13,6 @@ const generateToken = (id, role) => {
 // @route POST /api/auth/register
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
-    
-    if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Please provide all fields' });
-    }
 
     try {
         const userExists = await User.findOne({ email });
@@ -24,7 +20,7 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Only grant admin role to alhaqq@gmail.com
+        // Grant admin role ONLY to alhaqq@gmail.com
         const role = (email === 'alhaqq@gmail.com') ? 'admin' : 'user';
 
         const user = await User.create({
@@ -72,5 +68,6 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 module.exports = router;

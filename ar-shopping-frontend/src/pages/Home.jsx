@@ -58,26 +58,26 @@ const Home = () => {
         <div className="cat-large" style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop")',
         }}>
-          <div className="cat-content">
-            <h2>Summer Outfits</h2>
-          </div>
+          <Link to="/category/boys" className="cat-content">
+            <h2>Boys T-Shirts</h2>
+          </Link>
         </div>
         
         <div className="cat-right-col">
           <div className="cat-small" style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1000&auto=format&fit=crop")',
           }}>
-            <div className="cat-content">
-              <h2>Sweatshirts</h2>
-            </div>
+            <Link to="/category/girls" className="cat-content">
+              <h2>Girls T-Shirts</h2>
+            </Link>
           </div>
           
           <div className="cat-small" style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=1000&auto=format&fit=crop")',
           }}>
-            <div className="cat-content">
-              <h2>Graphic T-Shirts</h2>
-            </div>
+            <Link to="/category/hoodies" className="cat-content">
+              <h2>Hoodies</h2>
+            </Link>
           </div>
         </div>
       </section>

@@ -88,9 +88,6 @@ const ProductForm = ({ product, token, onSuccess }) => {
               <option value="Girls T-Shirts">Girls T-Shirts</option>
               <option value="Unisex T-Shirts">Unisex T-Shirts</option>
               <option value="Hoodies">Hoodies</option>
-              <option value="Summer Outfits">Summer Outfits</option>
-              <option value="Sweatshirts">Sweatshirts</option>
-              <option value="Graphic T-Shirts">Graphic T-Shirts</option>
             </select>
           </div>
           <div className="form-group">

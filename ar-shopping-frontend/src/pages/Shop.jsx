@@ -62,7 +62,7 @@ const Shop = () => {
           <div>
             <h4 style={{ fontSize: '1.1rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.5rem', borderBottom: '1px solid black', paddingBottom: '0.5rem' }}>CATEGORIES</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {['All', 'Unisex T-Shirts', 'Boys T-Shirts', 'Girls T-Shirts', 'Hoodies'].map(cat => (
+              {['All', 'Boys T-Shirts', 'Girls T-Shirts', 'Unisex T-Shirts', 'Hoodies'].map(cat => (
                 <li key={cat}>
                   <button 
                     onClick={() => setCategoryFilter(cat)}
