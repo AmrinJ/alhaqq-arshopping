@@ -49,6 +49,8 @@ const Cart = () => {
         totalPrice: finalPrice,
         orderItems: cartItems.map(item => ({
            product_id: item.id,
+           name: item.name,
+           image_url: item.image_url,
            quantity: item.quantity,
            size: item.selectedSize,
            color: null,
