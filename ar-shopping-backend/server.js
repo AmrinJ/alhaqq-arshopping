@@ -42,7 +42,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'AR Shopping Platform API is running' });
+  const mongoose = require('mongoose');
+  const dbState = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+  const mongoUri = process.env.MONGODB_URI;
+  res.json({
+    status: 'ok',
+    db: dbState[mongoose.connection.readyState] || 'unknown',
+    mongoUriSet: !!mongoUri,
+    mongoUriPreview: mongoUri ? mongoUri.substring(0, 30) + '...' : 'NOT SET',
+  });
 });
 
 app.use('/api/auth', authRoutes);
