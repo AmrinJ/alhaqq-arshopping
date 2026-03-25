@@ -85,6 +85,8 @@ const ProductDetails = () => {
         totalPrice: finalPrice,
         orderItems: [{
            product_id: product.id,
+           name: product.name,
+           image_url: product.image_url,
            quantity: 1,
            size: selectedSize,
            color: null,
